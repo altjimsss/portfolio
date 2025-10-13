@@ -12,9 +12,17 @@ import LogoLoop from './components/LogoLoop';
 import ShinyText from './components/ShinyText';
 import LetterGlitch from './components/LetterGlitch';
 import Carousel from './components/Carousel';
-import resumeImage from './assets/Resume.png';
-import resumePDF from './assets/Resume.pdf';
 import Preloader from './components/preloader';
+// Add these image imports
+import pfpImage from './assets/pfp.png';
+import resumeImage from './assets/Resume.png';
+import sagaImage from './assets/saga.png';
+import rocketImage from './assets/rocket.png';
+import tourismImage from './assets/tourism.png';
+import stockImage from './assets/stock.png';
+import studentImage from './assets/student.png';
+import aviateImage from './assets/aviate.png';
+import resumePDF from './assets/Resume.pdf';
 import {
   SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiNodedotjs,
   SiPython, SiGit, SiDocker, SiPostgresql, SiMongodb, SiGraphql, SiJavascript
@@ -107,14 +115,14 @@ const App = () => {
   }, []);
 
   const handleDownloadResume = useCallback(() => {
-    // Create a temporary link element
-    const link = document.createElement('a');
-    src = "/assets/Resume.png"
-    link.href = '/assets/Resume.pdf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  }, []);
+  // Create a temporary link element
+  const link = document.createElement('a');
+  link.href = resumePDF;  // Changed to imported variable
+  link.download = 'Allen_Martillan_Resume.pdf';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}, []);
 
   // Close popup when clicking outside
   useEffect(() => {
@@ -287,91 +295,91 @@ const App = () => {
   ], []);
 
   const projects = useMemo(() => [
-    {
-      id: 1,
-      title: "SAGA ai",
-      description: "An AI chatbot for coding assistance and project management",
-      technologies: ["Python", "MySQL", "Ollama"],
-      category: "Application",
-      year: "2024",
-      image: "src/assets/saga.png",
-      featured: true,
-      accentColor: "#61DAFB",
-      liveUrl: "https://saga-ai.demo",
-      githubUrl: "https://github.com/allen/saga-ai",
-      status: "Active"
-    },
-    {
-      id: 2,
-      title: "Rocket Recall",
-      description: "A intuitive flashcard app with spaced repetition and gamified learning",
-      technologies: ["C++"],
-      category: "Application",
-      year: "2024",
-      image: "src/assets/rocket.png",
-      featured: true,
-      accentColor: "#F7DF1E",
-      liveUrl: "https://rocket-recall.demo",
-      githubUrl: "https://github.com/allen/rocket-recall",
-      status: "Active"
-    },
-    {
-      id: 3,
-      title: "Mabini Tourism",
-      description: "A tourist information website with interactive maps and local guides",
-      technologies: ["Html", "CSS"],
-      category: "Web Application",
-      year: "2025",
-      image: "src/assets/tourism.png",
-      featured: false,
-      accentColor: "#CC6699",
-      liveUrl: "https://mabini-tourism.demo",
-      githubUrl: "https://github.com/altjimsss/mabini-tourism",
-      status: "Completed"
-    },
-    {
-      id: 4,
-      title: "STOCKOUT",
-      description: "Collaborated as a frontend developer on a full-featured e-commerce platform",
-      technologies: ["Angular", "Typescript"],
-      category: "E-Commerce Web Application",
-      year: "2023",
-      image: "src/assets/stock.png",
-      featured: false,
-      accentColor: "#339933",
-      liveUrl: "https://stockout.demo",
-      githubUrl: "https://github.com/StockOut/STOOCKOUT_E-COMMERCE",
-      status: "Active"
-    },
-    {
-      id: 5,
-      title: "Student Management Application",
-      description: "Simple CRUD app for managing student records and grades",
-      technologies: ["Angular", "Typescript"],
-      category: "CRUD Application",
-      year: "2023",
-      image: "src/assets/student.png",
-      featured: false,
-      accentColor: "#FF6B6B",
-      liveUrl: "https://student-mgmt.demo",
-      githubUrl: "https://github.com/altjimsss/ANGULAR-Student-Management-System",
-      status: "Completed"
-    },
-    {
-      id: 6,
-      title: "AVIATE",
-      description: "A flight reservation system with real-time booking and payment integration",
-      technologies: ["Php", "MySQL"],
-      category: "Web Application",
-      year: "2022",
-      image: "src/assets/aviate.png",
-      featured: false,
-      accentColor: "#4ECDC4",
-      liveUrl: "https://aviate.demo",
-      githubUrl: "https://github.com/allen/aviate",
-      status: "Archived"
-    },
-  ], []);
+  {
+    id: 1,
+    title: "SAGA ai",
+    description: "An AI chatbot for coding assistance and project management",
+    technologies: ["Python", "MySQL", "Ollama"],
+    category: "Application",
+    year: "2024",
+    image: sagaImage,  // Changed to imported variable
+    featured: true,
+    accentColor: "#61DAFB",
+    liveUrl: "https://saga-ai.demo",
+    githubUrl: "https://github.com/allen/saga-ai",
+    status: "Active"
+  },
+  {
+    id: 2,
+    title: "Rocket Recall",
+    description: "A intuitive flashcard app with spaced repetition and gamified learning",
+    technologies: ["C++"],
+    category: "Application",
+    year: "2024",
+    image: rocketImage,  // Changed to imported variable
+    featured: true,
+    accentColor: "#F7DF1E",
+    liveUrl: "https://rocket-recall.demo",
+    githubUrl: "https://github.com/allen/rocket-recall",
+    status: "Active"
+  },
+  {
+    id: 3,
+    title: "Mabini Tourism",
+    description: "A tourist information website with interactive maps and local guides",
+    technologies: ["Html", "CSS"],
+    category: "Web Application",
+    year: "2025",
+    image: tourismImage,  // Changed to imported variable
+    featured: false,
+    accentColor: "#CC6699",
+    liveUrl: "https://mabini-tourism.demo",
+    githubUrl: "https://github.com/altjimsss/mabini-tourism",
+    status: "Completed"
+  },
+  {
+    id: 4,
+    title: "STOCKOUT",
+    description: "Collaborated as a frontend developer on a full-featured e-commerce platform",
+    technologies: ["Angular", "Typescript"],
+    category: "E-Commerce Web Application",
+    year: "2023",
+    image: stockImage,  // Changed to imported variable
+    featured: false,
+    accentColor: "#339933",
+    liveUrl: "https://stockout.demo",
+    githubUrl: "https://github.com/StockOut/STOOCKOUT_E-COMMERCE",
+    status: "Active"
+  },
+  {
+    id: 5,
+    title: "Student Management Application",
+    description: "Simple CRUD app for managing student records and grades",
+    technologies: ["Angular", "Typescript"],
+    category: "CRUD Application",
+    year: "2023",
+    image: studentImage,  // Changed to imported variable
+    featured: false,
+    accentColor: "#FF6B6B",
+    liveUrl: "https://student-mgmt.demo",
+    githubUrl: "https://github.com/altjimsss/ANGULAR-Student-Management-System",
+    status: "Completed"
+  },
+  {
+    id: 6,
+    title: "AVIATE",
+    description: "A flight reservation system with real-time booking and payment integration",
+    technologies: ["Php", "MySQL"],
+    category: "Web Application",
+    year: "2022",
+    image: aviateImage,  // Changed to imported variable
+    featured: false,
+    accentColor: "#4ECDC4",
+    liveUrl: "https://aviate.demo",
+    githubUrl: "https://github.com/allen/aviate",
+    status: "Archived"
+  },
+], []);
 
   const testimonials = useMemo(() => [
     {
@@ -784,7 +792,7 @@ const App = () => {
                       handle="allenmartillan715"
                       status="Online"
                       contactText="Contact Me"
-                      avatarUrl="src/assets/pfp.png"
+                      avatarUrl={pfpImage}
                       showUserInfo={true}
                       enableTilt={true}
                       enableMobileTilt={false}
