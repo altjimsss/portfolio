@@ -28,8 +28,8 @@ import rocketImage from './assets/rocket.png';
 import tourismImage from './assets/tourism.png';
 import stockImage from './assets/stock.png';
 import studentImage from './assets/student.png';
-import aviateImage from './assets/aviate.png';
-
+import lazylatteImage from './assets/lazylatte.png';
+ 
 // Additional Professional Icon Sets
 import {
   FiCode,
@@ -312,7 +312,7 @@ const App = () => {
       title: "Rocket Recall",
       description: "A intuitive flashcard app with spaced repetition and gamified learning",
       technologies: ["C++"],
-      category: "Application",
+      category: "Web App",
       year: "2024",
       image: rocketImage,
       featured: true,
@@ -369,8 +369,8 @@ const App = () => {
       description: "A flight reservation system with real-time booking and payment integration",
       technologies: ["HTML", "CSS"],
       category: "Web Application",
-      year: "2022",
-      image: aviateImage,
+      year: "2025",
+      image: lazylatteImage,
       featured: false,
       accentColor: "#4ECDC4",
       liveUrl: "https://online-food-ordering-system-lazy-la.vercel.app/",
