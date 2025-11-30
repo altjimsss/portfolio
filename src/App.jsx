@@ -7,26 +7,28 @@ import TargetCursor from './components/TargetCursor';
 import TextType from './components/TextType';
 import ProfileCard from './components/ProfileCard';
 import CardSwap, { Card } from './components/CardSwap';
-import ChromaGrid from './components/ChromaGrid';
+import { CircularGallery } from './components/circular-gallery';
 import LogoLoop from './components/LogoLoop';
 import ShinyText from './components/ShinyText';
 import LetterGlitch from './components/LetterGlitch';
 import Carousel from './components/Carousel';
-import Preloader from './components/preloader';
+import Preloader from './components/Preloader.jsx';
+
 // Add these image imports
 import pfpImage from './assets/pfp.png';
 import resumeImage from './assets/Resume.png';
+import resumePDF from './assets/Resume.pdf';
+import {
+  SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiNodedotjs,
+  SiPython, SiGit, SiDocker, SiPostgresql, SiMongodb, SiGraphql, SiJavascript
+} from 'react-icons/si';
+// Add these image imports for your projects
 import sagaImage from './assets/saga.png';
 import rocketImage from './assets/rocket.png';
 import tourismImage from './assets/tourism.png';
 import stockImage from './assets/stock.png';
 import studentImage from './assets/student.png';
 import aviateImage from './assets/aviate.png';
-import resumePDF from './assets/Resume.pdf';
-import {
-  SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiNodedotjs,
-  SiPython, SiGit, SiDocker, SiPostgresql, SiMongodb, SiGraphql, SiJavascript
-} from 'react-icons/si';
 
 // Additional Professional Icon Sets
 import {
@@ -115,14 +117,13 @@ const App = () => {
   }, []);
 
   const handleDownloadResume = useCallback(() => {
-  // Create a temporary link element
-  const link = document.createElement('a');
-  link.href = resumePDF;  // Changed to imported variable
-  link.download = 'Allen_Martillan_Resume.pdf';
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-}, []);
+    const link = document.createElement('a');
+    link.href = resumePDF;
+    link.download = 'Allen_Martillan_Resume.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }, []);
 
   // Close popup when clicking outside
   useEffect(() => {
@@ -134,7 +135,7 @@ const App = () => {
 
     if (isResumeOpen) {
       document.addEventListener('mousedown', handleClickOutside);
-      document.body.style.overflow = 'hidden'; // Prevent background scrolling
+      document.body.style.overflow = 'hidden';
     }
 
     return () => {
@@ -159,8 +160,6 @@ const App = () => {
       document.removeEventListener('keydown', handleEscape);
     };
   }, [isResumeOpen]);
-
-  
 
   // Hidden text content for Learn More section
   const learnMoreContent = useMemo(() => [
@@ -204,7 +203,6 @@ const App = () => {
     { label: 'GitHub', link: 'https://github.com' },
     { label: 'LinkedIn', link: 'https://linkedin.com' },
     { label: 'Twitter', link: 'https://twitter.com' },
-
   ], []);
 
   const techLogos = useMemo(() => [
@@ -231,57 +229,57 @@ const App = () => {
       technologies: ["React", "TypeScript", "Next.js", "Tailwind CSS"],
       description: "Modern frontend development with cutting-edge frameworks and tools",
       expertise: "95%",
-      projects: "150+ components built"
+      projects: "3 components built"
     },
     {
       id: 2,
       category: "Design & Animation",
       icon: <HiOutlineColorSwatch size={24} color="white" />,
       color: "#FF69B4",
-      technologies: ["Figma", "Framer Motion", "Three.js", "CSS Animations"],
+      technologies: ["Figma", "Framer Motion", "Blender", "CSS Animations"],
       description: "Creating stunning visual experiences and interactive animations",
       expertise: "88%",
-      projects: "60+ animated interfaces"
+      projects: "10+ animated interfaces"
     },
     {
       id: 3,
       category: "Backend & Infrastructure",
       icon: <FiServer size={24} color="white" />,
       color: "#339933",
-      technologies: ["Node.js", "GraphQL", "PostgreSQL", "REST APIs"],
+      technologies: ["Node.js", "Flask", "MongoDB", "JSON"],
       description: "Scalable backend solutions and robust infrastructure design",
       expertise: "85%",
-      projects: "20+ backend systems"
+      projects: "3+ backend systems"
     },
     {
       id: 4,
       category: "Development Tools",
       icon: <FiTool size={24} color="white" />,
       color: "#646CFF",
-      technologies: ["Git", "Vite", "Jest", "Docker"],
+      technologies: ["Git", "Vite", "Docker"],
       description: "Streamlined development workflow with modern tooling",
       expertise: "90%",
-      projects: "45+ Vite projects"
+      projects: "2 Vite projects"
     },
     {
       id: 5,
       category: "Performance & Optimization",
       icon: <HiOutlineLightningBolt size={24} color="white" />,
       color: "#FF6B6B",
-      technologies: ["Webpack", "Lighthouse", "Core Web Vitals", "Bundle Analysis"],
+      technologies: ["React Optimization", "Code Splitting", "Caching","Chrome DevTools"],
       description: "Optimizing applications for maximum speed and efficiency",
       expertise: "92%",
-      projects: "40+ optimized apps"
+      projects: "3+ optimized apps"
     },
     {
       id: 6,
       category: "Mobile & PWA",
       icon: <MdOutlinePhoneIphone size={24} color="white" />,
       color: "#96CEB4",
-      technologies: ["React Native", "PWA", "Responsive Design", "Cross-platform"],
+      technologies: ["Flutter", "Dart", "Mobile Apps", "UI/UX"],
       description: "Building seamless mobile experiences and progressive web apps",
       expertise: "87%",
-      projects: "25+ mobile projects"
+      projects: "1+ mobile projects"
     }
   ], []);
 
@@ -295,91 +293,91 @@ const App = () => {
   ], []);
 
   const projects = useMemo(() => [
-  {
-    id: 1,
-    title: "SAGA ai",
-    description: "An AI chatbot for coding assistance and project management",
-    technologies: ["Python", "MySQL", "Ollama"],
-    category: "Application",
-    year: "2024",
-    image: sagaImage,  // Changed to imported variable
-    featured: true,
-    accentColor: "#61DAFB",
-    liveUrl: "https://saga-ai.demo",
-    githubUrl: "https://github.com/allen/saga-ai",
-    status: "Active"
-  },
-  {
-    id: 2,
-    title: "Rocket Recall",
-    description: "A intuitive flashcard app with spaced repetition and gamified learning",
-    technologies: ["C++"],
-    category: "Application",
-    year: "2024",
-    image: rocketImage,  // Changed to imported variable
-    featured: true,
-    accentColor: "#F7DF1E",
-    liveUrl: "https://rocket-recall.demo",
-    githubUrl: "https://github.com/allen/rocket-recall",
-    status: "Active"
-  },
-  {
-    id: 3,
-    title: "Mabini Tourism",
-    description: "A tourist information website with interactive maps and local guides",
-    technologies: ["Html", "CSS"],
-    category: "Web Application",
-    year: "2025",
-    image: tourismImage,  // Changed to imported variable
-    featured: false,
-    accentColor: "#CC6699",
-    liveUrl: "https://mabini-tourism.demo",
-    githubUrl: "https://github.com/altjimsss/mabini-tourism",
-    status: "Completed"
-  },
-  {
-    id: 4,
-    title: "STOCKOUT",
-    description: "Collaborated as a frontend developer on a full-featured e-commerce platform",
-    technologies: ["Angular", "Typescript"],
-    category: "E-Commerce Web Application",
-    year: "2023",
-    image: stockImage,  // Changed to imported variable
-    featured: false,
-    accentColor: "#339933",
-    liveUrl: "https://stockout.demo",
-    githubUrl: "https://github.com/StockOut/STOOCKOUT_E-COMMERCE",
-    status: "Active"
-  },
-  {
-    id: 5,
-    title: "Student Management Application",
-    description: "Simple CRUD app for managing student records and grades",
-    technologies: ["Angular", "Typescript"],
-    category: "CRUD Application",
-    year: "2023",
-    image: studentImage,  // Changed to imported variable
-    featured: false,
-    accentColor: "#FF6B6B",
-    liveUrl: "https://student-mgmt.demo",
-    githubUrl: "https://github.com/altjimsss/ANGULAR-Student-Management-System",
-    status: "Completed"
-  },
-  {
-    id: 6,
-    title: "AVIATE",
-    description: "A flight reservation system with real-time booking and payment integration",
-    technologies: ["Php", "MySQL"],
-    category: "Web Application",
-    year: "2022",
-    image: aviateImage,  // Changed to imported variable
-    featured: false,
-    accentColor: "#4ECDC4",
-    liveUrl: "https://aviate.demo",
-    githubUrl: "https://github.com/allen/aviate",
-    status: "Archived"
-  },
-], []);
+    {
+      id: 1,
+      title: "SAGA ai",
+      description: "An AI chatbot for coding assistance and project management",
+      technologies: ["Python", "MySQL", "Ollama"],
+      category: "Application",
+      year: "2024",
+      image: sagaImage,
+      featured: true,
+      accentColor: "#61DAFB",
+      liveUrl: "https://saga-ai.demo",
+      githubUrl: "https://github.com/allen/saga-ai",
+      status: "Archived"
+    },
+    {
+      id: 2,
+      title: "Rocket Recall",
+      description: "A intuitive flashcard app with spaced repetition and gamified learning",
+      technologies: ["C++"],
+      category: "Application",
+      year: "2024",
+      image: rocketImage,
+      featured: true,
+      accentColor: "#F7DF1E",
+      liveUrl: "https://rocket-recall.demo",
+      githubUrl: "https://github.com/allen/rocket-recall",
+      status: "Archived"
+    },
+    {
+      id: 3,
+      title: "Mabini Tourism",
+      description: "A tourist information website with interactive maps and local guides",
+      technologies: ["Html", "CSS"],
+      category: "Web Application",
+      year: "2025",
+      image: tourismImage,
+      featured: false,
+      accentColor: "#CC6699",
+      liveUrl: "https://mabini-tourism-dun.vercel.app/",
+      githubUrl: "https://github.com/altjimsss/mabini-tourism",
+      status: "Active"
+    },
+    {
+      id: 4,
+      title: "STOCKOUT",
+      description: "Collaborated as a frontend developer on a full-featured e-commerce platform",
+      technologies: ["Angular", "Typescript"],
+      category: "E-Commerce Web Application",
+      year: "2023",
+      image: stockImage,
+      featured: false,
+      accentColor: "#339933",
+      liveUrl: "https://stockout.demo",
+      githubUrl: "https://github.com/StockOut/STOOCKOUT_E-COMMERCE",
+      status: "Archived"
+    },
+    {
+      id: 5,
+      title: "Student Management Application",
+      description: "Simple CRUD app for managing student records and grades",
+      technologies: ["Angular", "Typescript"],
+      category: "CRUD Application",
+      year: "2023",
+      image: studentImage,
+      featured: false,
+      accentColor: "#FF6B6B",
+      liveUrl: "https://student-mgmt.demo",
+      githubUrl: "https://github.com/altjimsss/ANGULAR-Student-Management-System",
+      status: "Completed"
+    },
+    {
+      id: 6,
+      title: "LAZY LATTE",
+      description: "A flight reservation system with real-time booking and payment integration",
+      technologies: ["HTML", "CSS"],
+      category: "Web Application",
+      year: "2022",
+      image: aviateImage,
+      featured: false,
+      accentColor: "#4ECDC4",
+      liveUrl: "https://online-food-ordering-system-lazy-la.vercel.app/",
+      githubUrl: "https://online-food-ordering-system-lazy-la.vercel.app/",
+      status: "Active"
+    },
+  ], []);
 
   const testimonials = useMemo(() => [
     {
@@ -387,7 +385,6 @@ const App = () => {
       name: "Jashrylle Lee V. Abante",
       role: "Product Manager at TechCorp",
       content: "Allen delivered exceptional work on our dashboard project. His attention to detail and technical expertise exceeded our expectations.",
-
       project: "SAGA ai"
     },
     {
@@ -395,7 +392,6 @@ const App = () => {
       name: "Michael Chen",
       role: "CTO at StartupXYZ",
       content: "The performance optimizations Allen implemented reduced our load times by 60%. Highly recommended for complex frontend challenges.",
-
       project: "Rocket Recall"
     },
     {
@@ -403,27 +399,31 @@ const App = () => {
       name: "Emily Rodriguez",
       role: "Design Lead at CreativeStudio",
       content: "Working with Allen was a pleasure. He perfectly translated our designs into pixel-perfect, interactive experiences.",
-
       project: "Mabini Tourism"
     }
   ], []);
 
-  const chromaGridItems = useMemo(() =>
+  const circularGalleryData = useMemo(() => 
     projects.map(project => ({
-      image: project.image,
-      title: project.title,
-      subtitle: project.category,
-      handle: project.year,
-      borderColor: project.accentColor,
-      gradient: `linear-gradient(145deg, ${project.accentColor}, #000)`,
-      url: project.githubUrl, // This makes the card clickable and goes to GitHub
-      description: project.description,
-      technologies: project.technologies,
-      liveUrl: project.liveUrl,
-      githubUrl: project.githubUrl,
-      status: project.status
+      id: project.id,
+      common: project.title,
+      binomial: project.category,
+      photo: {
+        url: project.image,
+        text: project.description,
+        pos: '50% 50%',
+        by: project.year.toString(),
+        technologies: project.technologies,
+        accentColor: project.accentColor,
+        status: project.status
+      },
+      featured: project.featured,
+      links: {
+        live: project.liveUrl,
+        github: project.githubUrl
+      }
     }))
-    , [projects]);
+  , [projects]);
 
   // Event handlers
   const handleMouseMove = useCallback((e) => {
@@ -549,10 +549,10 @@ const App = () => {
 
   const FeatureCard = ({ icon, title, description, color = 'green' }) => {
     const colorClasses = {
-      green: 'hover:border-green-400/50 hover:shadow-green-500/20',
-      blue: 'hover:border-blue-400/50 hover:shadow-blue-500/20',
-      purple: 'hover:border-purple-400/50 hover:shadow-purple-500/20',
-      yellow: 'hover:border-yellow-400/50 hover:shadow-yellow-500/20'
+      green: 'hover:border-green-400/50 hover:shadow-green-500/20 cursor-target',
+      blue: 'hover:border-blue-400/50 hover:shadow-blue-500/20 cursor-target',
+      purple: 'hover:border-purple-400/50 hover:shadow-purple-500/20 cursor-target',
+      yellow: 'hover:border-yellow-400/50 hover:shadow-yellow-500/20 cursor-target'
     };
 
     return (
@@ -589,7 +589,7 @@ const App = () => {
         href={liveUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex-1 bg-gradient-to-r from-green-400 to-blue-400 text-black text-center py-2 px-4 rounded-lg font-semibold hover:shadow-lg hover:shadow-green-400/30 transition-all duration-300 transform hover:scale-105 text-sm"
+        className="flex-1 bg-gradient-to-r from-green-400 to-blue-400 text-black text-center py-2 px-4 rounded-lg font-semibold hover:shadow-lg hover:shadow-green-400/30 transition-all duration-300 transform hover:scale-105 text-sm cursor-target"
       >
         Live Demo
       </a>
@@ -597,15 +597,12 @@ const App = () => {
         href={githubUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex-1 bg-white/10 backdrop-blur-sm text-white text-center py-2 px-4 rounded-lg font-semibold border border-white/20 hover:border-green-400/50 transition-all duration-300 transform hover:scale-105 text-sm"
+        className="flex-1 bg-white/10 backdrop-blur-sm text-white text-center py-2 px-4 rounded-lg font-semibold border border-white/20 hover:border-green-400/50 transition-all duration-300 transform hover:scale-105 text-sm cursor-target"
       >
         Source Code
       </a>
     </div>
   );
-
-  // Learn More Expanded Content Component
-  
 
   // Resume Popup Component
   const ResumePopup = () => {
@@ -622,7 +619,7 @@ const App = () => {
             <h3 className="text-xl font-bold text-white">My Resume</h3>
             <button
               onClick={handleResumeClose}
-              className="p-2 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-300"
+              className="p-2 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-300 cursor-target"
               aria-label="Close resume"
             >
               <FiX size={24} />
@@ -651,17 +648,8 @@ const App = () => {
                 Download my resume as PDF for your records
               </p>
               <button
-                onClick={() => {
-                  // Create a temporary link element for PDF download
-                  const link = document.createElement('a');
-                  link.href = resumePDF;
-                  link.download = 'Allen_Martillan_Resume.pdf';
-                  link.target = '_blank'; // Open in new tab if download doesn't work
-                  document.body.appendChild(link);
-                  link.click();
-                  document.body.removeChild(link);
-                }}
-                className="flex items-center gap-3 bg-gradient-to-r from-green-400 to-blue-400 text-black font-bold py-3 px-6 rounded-xl hover:shadow-2xl hover:shadow-green-400/40 transition-all duration-500 transform hover:scale-105 shadow-lg min-w-[200px] justify-center"
+                onClick={handleDownloadResume}
+                className="flex items-center gap-3 bg-gradient-to-r from-green-400 to-blue-400 text-black font-bold py-3 px-6 rounded-xl hover:shadow-2xl hover:shadow-green-400/40 transition-all duration-500 transform hover:scale-105 shadow-lg min-w-[200px] justify-center cursor-target"
               >
                 <FiDownload size={20} />
                 Download PDF
@@ -674,18 +662,12 @@ const App = () => {
   };
 
   return (
-    <div className="relative w-full min-h-screen overflow-hidden" onMouseMove={handleMouseMove}>
+    <div className="relative w-full min-h-screen overflow-hidden">
       {/* Resume Popup */}
       <ResumePopup />
 
       {/* Enhanced Background Layers */}
       <div className="fixed inset-0 pointer-events-auto">
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-800"></div>
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-green-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-purple-500/10 rounded-full blur-2xl animate-pulse delay-500"></div>
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,black,transparent)]"></div>
-
         <FaultyTerminal
           scale={2}
           gridMul={[2, 1]}
@@ -693,15 +675,15 @@ const App = () => {
           timeScale={1}
           pause={false}
           scanlineIntensity={1}
-          glitchAmount={2}
+          glitchAmount={1}
           flickerAmount={1}
           noiseAmp={1.3}
-          chromaticAberration={0}
+          chromaticAberration={1}
           dither={0}
           curvature={.3}
           tint="#bc6fe2ff"
           mouseReact={false}
-          mouseStrength={0.1}
+          mouseStrength={0.0}
           pageLoadAnimation={false}
           brightness={0.2}
         />
@@ -745,24 +727,24 @@ const App = () => {
       />
 
       {/* Hero Section */}
-      <div ref={homeRef} className={`relative z-10 min-h-screen flex items-center justify-center transition-all duration-300 pointer-events-none ${isMenuOpen ? 'lg:mr-80 xl:mr-96' : ''}`}>
-        <div className="text-center px-6 max-w-6xl mx-auto pointer-events-auto">
-          <TextType
-            text={[
-              "Hello, World!",
-              "I mean hello there.",
-              "Do you need a FRONT END DEVELOPER?",
-              "I'm Allen :)",
-              "And I can help you!"
-            ]}
-            typingSpeed={75}
-            pauseDuration={1500}
-            showCursor={true}
-            cursorCharacter="█"
-            className="text-white text-4xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-8 drop-shadow-2xl"
-          />
-        </div>
-      </div>
+<section id="home" ref={homeRef} className={`relative z-10 min-h-screen flex items-center justify-center transition-all duration-300 pointer-events-none ${isMenuOpen ? 'lg:mr-80 xl:mr-96' : ''}`}>
+  <div className="text-center px-6 max-w-6xl mx-auto pointer-events-auto cursor-target">
+    <TextType
+      text={[
+        "Hello, World!",
+        "I mean hello there.",
+        "Do you need a FRONT END DEVELOPER?",
+        "I'm Allen :)",
+        "And I can help you!"
+      ]}
+      typingSpeed={100}
+      pauseDuration={1200}
+      showCursor={true}
+      cursorCharacter="█"
+      className="text-white text-4xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-8 drop-shadow-2xl"
+    />
+  </div>
+</section>
 
       {/* Enhanced Gradient Transition with Blurred Edges */}
       <div className="relative h-32 z-20 overflow-hidden">
@@ -785,7 +767,7 @@ const App = () => {
               <div className="sticky top-32">
                 <div className="relative group">
                   <div className="absolute -inset-4 bg-gradient-to-r from-green-500 to-blue-500 rounded-3xl opacity-30 group-hover:opacity-50 blur-xl transition-all duration-500"></div>
-                  <div className="relative bg-black/80 backdrop-blur-xl rounded-2xl p-8 border border-white/20 shadow-2xl">
+                  <div className="relative bg-black/80 backdrop-blur-xl rounded-2xl p-8 border border-white/20 shadow-2xl cursor-target">
                     <ProfileCard
                       name="Allen James M. Martillan"
                       title="Frontend Developer"
@@ -799,7 +781,6 @@ const App = () => {
                       onContactClick={handleContactClick}
                     />
                   </div>
-                  {/* Enhanced Profile Actions */}
                 </div>
               </div>
             </div>
@@ -855,8 +836,6 @@ const App = () => {
                   />
                 </div>
 
-
-
                 {/* Call to Action */}
                 <div className={`transform transition-all duration-700 delay-600 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
                   <div className="bg-gradient-to-r from-green-500/20 to-blue-500/20 backdrop-blur-lg rounded-2xl p-4 border border-white/20">
@@ -868,7 +847,7 @@ const App = () => {
                       <div className="flex justify-end mt-2">
                         <button
                           onClick={handleResumeOpen}
-                          className="bg-transparent text-white font-semibold py-1 px-6 rounded-lg border border-white/20 hover:border-white/40 transition-all duration-300"
+                          className="cursor-target bg-transparent text-white font-semibold py-1 px-6 rounded-lg border border-white/20 hover:border-white/40 transition-all duration-300"
                         >
                           <ShinyText
                             text="CV"
@@ -881,13 +860,13 @@ const App = () => {
                       <div className="flex gap-3">
                         <button
                           onClick={handleStartProject}
-                          className="bg-white text-black font-semibold py-1 px-6 rounded-lg hover:shadow-lg transition-all duration-300 transform hover:scale-105"
+                          className="cursor-target bg-white text-black font-semibold py-1 px-6 rounded-lg hover:shadow-lg transition-all duration-300 transform hover:scale-105"
                         >
                           Start Project
                         </button>
                         <button
                           onClick={handleLearnMore}
-                          className="bg-transparent text-white font-semibold py-1 px-6 rounded-lg border border-white/20 hover:border-white/40 transition-all duration-300 flex items-center gap-2"
+                          className="cursor-target bg-transparent text-white font-semibold py-1 px-6 rounded-lg border border-white/20 hover:border-white/40 transition-all duration-300 flex items-center gap-2"
                         >
                           {isLearnMoreExpanded ? 'Show Less' : 'Learn More'}
                           {isLearnMoreExpanded ? <FiChevronUp size={16} /> : <FiChevronDown size={16} />}
@@ -972,8 +951,8 @@ const App = () => {
                   <div className="grid grid-cols-4 gap-2 mt-5">
                     {[
                       { number: "12+", label: "Technologies" },
-                      { number: "45+", label: "Projects" },
-                      { number: "3+", label: "Years Exp" },
+                      { number: "10+", label: "Projects" },
+                      { number: "3", label: "Years Exp" },
                       { number: "98%", label: "Success Rate" }
                     ].map((stat, index) => (
                       <div key={index} className="text-center">
@@ -995,7 +974,7 @@ const App = () => {
                     >
                       {techStackCards.map((card) => (
                         <Card key={card.id}>
-                          <div className="h-full bg-black/80 backdrop-blur-xl rounded-2xl p-6 border border-white/20 hover:border-green-400/50 transition-all duration-500 group shadow-2xl">
+                          <div className="h-full bg-black/80 backdrop-blur-xl rounded-2xl p-6 border border-white/20 hover:border-green-400/50 transition-all duration-500 group shadow-2xl cursor-target">
                             <div className="flex items-center gap-3 mb-4">
                               <div
                                 className="w-10 h-10 rounded-xl flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-500 shadow-lg"
@@ -1035,7 +1014,7 @@ const App = () => {
                               {card.technologies.map((tech) => (
                                 <div
                                   key={tech}
-                                  className="px-2 py-1 bg-white/10 rounded text-white/90 text-xs text-center border border-white/20 hover:border-white/40 transition-all duration-300 hover:scale-105 font-medium backdrop-blur-sm"
+                                  className="px-2 py-1 bg-white/10 rounded text-white/90 text-xs text-center border border-white/20 hover:border-white/40 transition-all duration-300 hover:scale-105 font-medium backdrop-blur-sm cursor-target"
                                 >
                                   {tech}
                                 </div>
@@ -1080,107 +1059,90 @@ const App = () => {
               />
             </div>
           </div>
-
-
         </div>
       </section>
 
       {/* Projects Section */}
-      <section id="projects" ref={projectsRef} className="relative min-h-screen py-20 px-6 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black">
-          <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-black/80 via-black/40 to-transparent backdrop-blur-3xl"></div>
-          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/80 via-black/40 to-transparent backdrop-blur-3xl"></div>
-
-          {/* Subtle LetterGlitch Background */}
-          <div className="absolute inset-0 opacity-25 z-1">
-            <LetterGlitch
-              glitchSpeed={80}
-              centerVignette={false}
-              outerVignette={true
-              }
-              smooth={true}
-            />
-          </div>
-        </div>
-
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-purple-900/10 via-transparent to-blue-900/10 backdrop-blur-sm"></div>
-
-        <div className="container mx-auto max-w-7xl relative z-10">
-          {/* Header */}
-          <div className="text-center mb-2">
-            <div className={`transform transition-all duration-1000 ${isProjectsVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-100'}`}>
-              <div className="flex items-center justify-center gap-4 mb-6">
-                <div className="w-12 h-1 bg-gradient-to-r from-green-400 to-blue-400 rounded-full"></div>
-                <span className="text-green-400 uppercase tracking-widest text-sm font-bold">Portfolio</span>
-                <div className="w-12 h-1 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full"></div>
-              </div>
-              <h2 className="text-6xl lg:text-8xl font-black bg-gradient-to-r from-white via-white to-white/90 bg-clip-text text-transparent leading-none mb-6 drop-shadow-2xl">
-                FEATURED
-                <br />
-                <span className="bg-gradient-to-r from-green-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
-                  PROJECTS
-                </span>
-              </h2>
-            </div>
-            <p className="text-xl text-white/70 max-w-2xl mx-auto font-light drop-shadow-lg">
-              A visual journey through innovative solutions and cutting-edge implementations
-            </p>
-          </div>
-
-          {/* Project Filters */}
-          <div className={`flex flex-wrap gap-3 justify-center mb-2 transform transition-all duration-700 delay-200 ${isProjectsVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-            {['All', 'Web App', 'Mobile', 'E-Commerce', 'Dashboard', 'API'].map((filter) => (
-              <button
-                key={filter}
-                className="px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white/80 hover:text-white hover:border-green-400/50 transition-all duration-300 font-medium"
-              >
-                {filter}
-              </button>
-            ))}
-          </div>
-
-          {/* ChromaGrid Container */}
-<div className={`transform transition-all duration-1000 delay-300 ${isProjectsVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-  <div className="chroma-grid-container" style={{ 
-    height: 'auto', 
-    minHeight: '600px',
-    position: 'relative',
-    padding: '2rem 0'
-  }}>
-    <ChromaGrid
-      items={chromaGridItems}
-      radius={250}
-      damping={0.45}
-      fadeOut={0.6}
-      ease="power3.out"
-    />
+<section id="projects" ref={projectsRef} className="relative min-h-screen py-20 px-6 overflow-hidden z-10">
+  {/* Background layers */}
+  <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black">
+    <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-black/80 via-black/40 to-transparent backdrop-blur-3xl"></div>
+    <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/80 via-black/40 to-transparent backdrop-blur-3xl"></div>
   </div>
-</div>
 
-{/* Project Stats - Now properly positioned after ChromaGrid */}
-<div className={`mt-8 lg:mt-16 grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 transform transition-all duration-1000 delay-700 ${isProjectsVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-  {[
-    { number: "45+", label: "Projects Completed" },
-    { number: "3", label: "Years Experience" },
-    { number: "98%", label: "Client Satisfaction" },
-    { number: "150K+", label: "Lines of Code" }
-  ].map((stat) => (
-    <div
-      key={stat.label}
-      className="bg-black/60 backdrop-blur-xl rounded-2xl p-4 lg:p-6 border border-white/20 hover:border-green-400/50 transition-all duration-500 group text-center shadow-2xl hover:shadow-green-500/20"
-    >
-      <div className="text-2xl lg:text-4xl font-bold text-white mb-2 bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent drop-shadow-lg">
-        {stat.number}
-      </div>
-      <div className="text-white/70 text-xs lg:text-sm font-medium">{stat.label}</div>
-    </div>
-  ))}
-</div>
+  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-purple-900/10 via-transparent to-blue-900/10 backdrop-blur-sm"></div>
 
-
+  <div className="container mx-auto max-w-7xl relative z-10">
+    {/* Header */}
+    <div className="text-center mb-12">
+      <div className={`transform transition-all duration-1000 ${isProjectsVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-100'}`}>
+        <div className="flex items-center justify-center gap-4 mb-6">
+          <div className="w-12 h-1 bg-gradient-to-r from-green-400 to-blue-400 rounded-full"></div>
+          <span className="text-green-400 uppercase tracking-widest text-sm font-bold">Portfolio</span>
+          <div className="w-12 h-1 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full"></div>
         </div>
-      </section>
+        <h2 className="text-6xl lg:text-8xl font-black bg-gradient-to-r from-white via-white to-white/90 bg-clip-text text-transparent leading-none mb-6 drop-shadow-2xl">
+          FEATURED
+          <br />
+          <span className="bg-gradient-to-r from-green-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+            PROJECTS
+          </span>
+        </h2>
+      </div>
+      <p className="text-xl text-white/70 max-w-2xl mx-auto font-light drop-shadow-lg">
+        Explore my projects - click the numbers to navigate
+      </p>
+    </div>
 
+    {/* Project Gallery with LetterGlitch Background */}
+    <div className={`transform transition-all duration-1000 delay-300 ${isProjectsVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}>
+      <div className="w-full bg-transparent rounded-2xl border border-white/20 backdrop-blur-lg p-3 cursor-target relative overflow-hidden">
+        {/* LetterGlitch background inside the container */}
+        <div className="absolute inset-0 rounded-2xl overflow-hidden z-0">
+          <LetterGlitch
+            glitchColors={['#2b4539', '#61dca3', '#61b3dc']}
+            glitchSpeed={30}
+            centerVignette={true}
+            outerVignette={false}
+            smooth={true}
+            characters="PROJECTSCODEDESIGNDEVELOPBUILDCREATEINNOVATE0123456789"
+            className="opacity-40 rounded-2xl"
+          />
+        </div>
+        
+        {/* Circular Gallery on top */}
+        <div className="w-full h-[600px] relative flex items-center justify-center bg-transparent z-10">
+          <CircularGallery 
+            items={circularGalleryData} 
+            projectsData={projects} 
+            className="bg-transparent"
+            radius={450}
+          />
+        </div>
+      </div>
+    </div>
+
+    {/* Project Stats */}
+    <div className={`mt-16 grid grid-cols-2 lg:grid-cols-4 gap-6 transform transition-all duration-1000 delay-700 ${isProjectsVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+      {[
+        { number: "10+", label: "Projects Completed" },
+        { number: "3", label: "Years Experience" },
+        { number: "98%", label: "Client Satisfaction" },
+        { number: "35K+", label: "Lines of Code" }
+      ].map((stat) => (
+        <div
+          key={stat.label}
+          className="bg-black/60 backdrop-blur-xl rounded-2xl p-6 border border-white/20 hover:border-green-400/50 transition-all duration-500 group text-center cursor-target"
+        >
+          <div className="text-4xl font-bold text-white mb-2 bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent">
+            {stat.number}
+          </div>
+          <div className="text-white/70 text-sm font-medium">{stat.label}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
 
       {/* Testimonials Section */}
       <section id="testimonials" ref={testimonialsRef} className="relative min-h-screen py-20 px-6 overflow-hidden">
@@ -1217,7 +1179,6 @@ const App = () => {
           </div>
 
           {/* Carousel Section */}
-
           <div className="flex justify-center relative z-10">
             <div style={{
               height: 'auto',
@@ -1240,7 +1201,6 @@ const App = () => {
               />
             </div>
           </div>
-         
         </div>
       </section>
 
@@ -1276,14 +1236,14 @@ const App = () => {
               {/* Contact Methods */}
               <div className="space-y-6">
                 {[
-                  { icon: <FiCode size={20} />, label: 'Email', value: 'allenmartillan715@gmail.com', link: 'mailto:allen@example.com' },
-                  { icon: <FiGlobe size={20} />, label: 'Phone', value: '09924987972', link: 'tel:+15551234567' },
-                  { icon: <SiGit size={20} />, label: 'GitHub', value: '@altjimsss', link: 'https://github.com' },
+                  { icon: <FiCode size={20} />, label: 'Email', value: 'allenmartillan715@gmail.com', link: 'mailto:allenmartillan715@gmail.com' },
+                  { icon: <FiGlobe size={20} />, label: 'Phone', value: '09924987972', link: 'tel:+639924987972' },
+                  { icon: <SiGit size={20} />, label: 'GitHub', value: '@altjimsss', link: 'https://github.com/altjimsss' },
                 ].map((item, index) => (
                   <a
                     key={item.label}
                     href={item.link}
-                    className="flex items-center gap-4 p-4 rounded-2xl bg-white/10 backdrop-blur-lg border border-white/20 hover:border-green-400/50 transition-all duration-500 group shadow-lg hover:shadow-green-500/20"
+                    className="flex items-center gap-4 p-4 rounded-2xl bg-white/10 backdrop-blur-lg border border-white/20 hover:border-green-400/50 transition-all duration-500 group shadow-lg hover:shadow-green-500/20 cursor-target"
                     style={{
                       animationDelay: `${index * 100}ms`,
                       transform: isContactVisible ? 'translateX(0)' : 'translateX(-20px)',
@@ -1304,9 +1264,6 @@ const App = () => {
                   </a>
                 ))}
               </div>
-
-
-
             </div>
 
             {/* Right Column - Contact Form */}
@@ -1325,13 +1282,13 @@ const App = () => {
                         <textarea
                           placeholder={field.placeholder}
                           rows="5"
-                          className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:border-green-400/50 focus:outline-none transition-all duration-300 resize-none shadow-inner"
+                          className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:border-green-400/50 focus:outline-none transition-all duration-300 resize-none shadow-inner cursor-target"
                         />
                       ) : (
                         <input
                           type={field.type}
                           placeholder={field.placeholder}
-                          className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:border-green-400/50 focus:outline-none transition-all duration-300 shadow-inner"
+                          className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:border-green-400/50 focus:outline-none transition-all duration-300 shadow-inner cursor-target"
                         />
                       )}
                     </div>
@@ -1340,21 +1297,18 @@ const App = () => {
                   <div className="flex gap-4">
                     <button
                       type="submit"
-                      className="flex-1 bg-gradient-to-r from-green-400 to-blue-400 text-black font-bold py-4 rounded-xl hover:shadow-2xl hover:shadow-green-400/40 transition-all duration-500 transform hover:scale-105 shadow-lg"
+                      className="flex-1 bg-gradient-to-r from-green-400 to-blue-400 text-black font-bold py-4 rounded-xl hover:shadow-2xl hover:shadow-green-400/40 transition-all duration-500 transform hover:scale-105 shadow-lg cursor-target"
                     >
                       Send Message
                     </button>
                     <button
                       type="button"
-                      className="px-6 bg-white/10 backdrop-blur-sm text-white font-semibold py-4 rounded-xl border border-white/20 hover:border-green-400/50 transition-all duration-300"
+                      className="px-6 bg-white/10 backdrop-blur-sm text-white font-semibold py-4 rounded-xl border border-white/20 hover:border-green-400/50 transition-all duration-300 cursor-target"
                     >
                       Attach File
                     </button>
                   </div>
                 </form>
-
-                {/* Quick Response Info */}
-
               </div>
             </div>
           </div>
@@ -1378,7 +1332,7 @@ const App = () => {
                   <a
                     key={social.label}
                     href={social.link}
-                    className="text-white/60 hover:text-green-400 transition-colors duration-300"
+                    className="text-white/60 hover:text-green-400 transition-colors duration-300 cursor-target"
                   >
                     {social.label}
                   </a>
@@ -1394,7 +1348,7 @@ const App = () => {
                   <a
                     key={item.label}
                     href={item.link}
-                    className="block text-white/60 hover:text-green-400 transition-colors duration-300 text-sm"
+                    className="block text-white/60 hover:text-green-400 transition-colors duration-300 text-sm cursor-target"
                   >
                     {item.label}
                   </a>
@@ -1410,7 +1364,7 @@ const App = () => {
                   <a
                     key={service}
                     href="#"
-                    className="block text-white/60 hover:text-green-400 transition-colors duration-300 text-sm"
+                    className="block text-white/60 hover:text-green-400 transition-colors duration-300 text-sm cursor-target"
                   >
                     {service}
                   </a>
@@ -1427,9 +1381,9 @@ const App = () => {
                   <input
                     type="email"
                     placeholder="Your email"
-                    className="flex-1 bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm placeholder-white/40 focus:outline-none focus:border-green-400/50"
+                    className="flex-1 bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm placeholder-white/40 focus:outline-none focus:border-green-400/50 cursor-target"
                   />
-                  <button className="bg-green-400 text-black px-4 py-2 rounded-lg font-semibold text-sm hover:bg-green-300 transition-colors duration-300">
+                  <button className="bg-green-400 text-black px-4 py-2 rounded-lg font-semibold text-sm hover:bg-green-300 transition-colors duration-300 cursor-target">
                     Subscribe
                   </button>
                 </div>
@@ -1442,9 +1396,9 @@ const App = () => {
               © 2024 Allen James M. Martillan. Built with React & Passion.
             </div>
             <div className="flex items-center gap-6 text-white/50 text-sm">
-              <a href="#" className="hover:text-green-400 transition-colors duration-300">Privacy Policy</a>
-              <a href="#" className="hover:text-green-400 transition-colors duration-300">Terms of Service</a>
-              <a href="#" className="hover:text-green-400 transition-colors duration-300">Cookies</a>
+              <a href="#" className="hover:text-green-400 transition-colors duration-300 cursor-target">Privacy Policy</a>
+              <a href="#" className="hover:text-green-400 transition-colors duration-300 cursor-target">Terms of Service</a>
+              <a href="#" className="hover:text-green-400 transition-colors duration-300 cursor-target">Cookies</a>
             </div>
           </div>
         </div>
