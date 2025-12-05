@@ -28,27 +28,44 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 2em;
+  padding-top: 0em;
+  padding-right: 2em;
   background: transparent;
   pointer-events: none;
-  z-index: 20;
+  z-index: 100;
 }
 
 .staggered-menu-header > * {
   pointer-events: auto;
 }
 
-.sm-logo {
+/* Logo button styles */
+.sm-toggle-logo {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
   display: flex;
   align-items: center;
-  user-select: none;
+  justify-content: center;
+  transition: all 0.3s ease;
+  margin-left: auto; /* Push to the right */
 }
 
-.sm-logo-img {
+.sm-toggle-logo:hover {
+  transform: scale(1.1);
+}
+
+.sm-toggle-logo:active {
+  transform: scale(0.95);
+}
+
+.sm-toggle-logo-img {
   display: block;
-  height: 64px;
-  width: auto;
+  width: 50px;
+  height: 50px;
   object-fit: contain;
+  transition: all 0.3s ease;
 }
 
 .sm-toggle {
@@ -124,8 +141,9 @@
   background: currentColor;
   border-radius: 2px;
   transform: translate(-50%, -50%);
-  will-change: transform;
 }
+
+/* REMOVED: will-change: transform; from sm-icon-line */
 
 .sm-line {
   display: none !important;
@@ -161,6 +179,8 @@
   width: clamp(260px, 38vw, 420px);
   pointer-events: none;
   z-index: 5;
+  visibility: hidden;
+  opacity: 0;
 }
 
 [data-position='left'] .sm-prelayers {
@@ -306,8 +326,7 @@
 
 .sm-panel-itemLabel {
   display: inline-block;
-  will-change: transform;
-  transform-origin: 50% 100%;
+  /* REMOVED: will-change and transform-origin properties */
 }
 
 .sm-panel-item:hover {
@@ -339,10 +358,6 @@
     left: 0;
     right: 0;
   }
-
-  .staggered-menu-wrapper[data-open] .sm-logo-img {
-    filter: invert(100%);
-  }
 }
 
 @media (max-width: 640px) {
@@ -351,9 +366,10 @@
     left: 0;
     right: 0;
   }
-
-  .staggered-menu-wrapper[data-open] .sm-logo-img {
-    filter: invert(100%);
+  
+  .sm-toggle-logo-img {
+    width: 50px;
+    height: 50px;
   }
 }
 
@@ -376,3 +392,11 @@
 .faulty-terminal-container canvas {
   pointer-events: auto !important;
 }
+
+/* ADD: Disable any rotation transitions */
+.sm-icon,
+.sm-icon-line,
+.sm-toggle {
+  transition: none !important;
+  transform: none !important;
+} 

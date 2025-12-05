@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react'
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import FaultyTerminal from './components/FaultyTerminal.jsx';
+import GradientBlinds from './components/GradientBlinds.jsx';
 import StaggeredMenu from './components/StaggeredMenu.jsx';
 import TargetCursor from './components/TargetCursor';
 import TextType from './components/TextType';
@@ -13,6 +14,10 @@ import ShinyText from './components/ShinyText';
 import LetterGlitch from './components/LetterGlitch';
 import Carousel from './components/Carousel';
 import Preloader from './components/Preloader.jsx';
+import Marquee from 'react-fast-marquee';
+
+
+
 
 // Add these image imports
 import pfpImage from './assets/pfp.png';
@@ -29,7 +34,7 @@ import tourismImage from './assets/tourism.png';
 import stockImage from './assets/stock.png';
 import studentImage from './assets/student.png';
 import lazylatteImage from './assets/lazylatte.png';
- 
+
 // Additional Professional Icon Sets
 import {
   FiCode,
@@ -266,7 +271,7 @@ const App = () => {
       category: "Performance & Optimization",
       icon: <HiOutlineLightningBolt size={24} color="white" />,
       color: "#FF6B6B",
-      technologies: ["React Optimization", "Code Splitting", "Caching","Chrome DevTools"],
+      technologies: ["React Optimization", "Code Splitting", "Caching", "Chrome DevTools"],
       description: "Optimizing applications for maximum speed and efficiency",
       expertise: "92%",
       projects: "3+ optimized apps"
@@ -403,7 +408,7 @@ const App = () => {
     }
   ], []);
 
-  const circularGalleryData = useMemo(() => 
+  const circularGalleryData = useMemo(() =>
     projects.map(project => ({
       id: project.id,
       common: project.title,
@@ -423,7 +428,7 @@ const App = () => {
         github: project.githubUrl
       }
     }))
-  , [projects]);
+    , [projects]);
 
   // Event handlers
   const handleMouseMove = useCallback((e) => {
@@ -663,29 +668,14 @@ const App = () => {
 
   return (
     <div className="relative w-full min-h-screen overflow-hidden">
+
       {/* Resume Popup */}
       <ResumePopup />
+      
 
       {/* Enhanced Background Layers */}
       <div className="fixed inset-0 pointer-events-auto">
-        <FaultyTerminal
-          scale={2}
-          gridMul={[2, 1]}
-          digitSize={1}
-          timeScale={1}
-          pause={false}
-          scanlineIntensity={1}
-          glitchAmount={1}
-          flickerAmount={1}
-          noiseAmp={1.3}
-          chromaticAberration={1}
-          dither={0}
-          curvature={.3}
-          tint="#bc6fe2ff"
-          mouseReact={false}
-          mouseStrength={0.0}
-          pageLoadAnimation={false}
-          brightness={0.2}
+        <GradientBlinds
         />
       </div>
 
@@ -708,6 +698,56 @@ const App = () => {
           <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg viewBox=%220 0 100 100%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noise%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%221%22 stitchTiles=%22stitch%22/%3E%3C/filter%23%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url%28%23noise%29%22 opacity=%220.1%22/%3E%3C/svg%3E')] opacity-10"></div>
         </div>
       </div>
+      {/* Frontend Marquee Banner */}
+      <div className="fixed top-3 left-0 w-full z-30 pointer-events-none">
+        {/* Left dark gradient overlay */}
+        <div className="absolute left-0 top-0 h-full w-80 z-10 pointer-events-none bg-gradient-to-r from-black to-transparent" />
+
+        {/* Right dark gradient overlay */}
+        <div className="absolute right-0 top-0 h-full w-80 z-10 pointer-events-none bg-gradient-to-l from-black to-transparent" />
+        <Marquee
+          autoFill={true}
+          speed={40}
+          gradient={false}
+          pauseOnHover={true}
+          direction="left"
+          className="bg-gradient-to-r from-black/95 via-green-500/15 to-black/95 backdrop-blur-xl border-b border-white/20 py-2 shadow-lg"
+        >
+          {[
+            "UI Design", "UX Research", "React", "TypeScript", "Performance",
+            "Accessibility", "Responsive", "Animation", "Clean Code", "Testing",
+            "Component Library", "State Management", "API Integration", "SEO",
+            "Web Vitals", "Mobile First", "Design Systems", "Figma", "Tailwind CSS",
+            "Next.js", "Pixel Perfect", "User Centered", "Interactive", "Modern"
+          ].map((term, i) => (
+            <div key={i} className="flex items-center">
+              <span className="text-white text-xs font-bold mx-4 tracking-wider uppercase bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
+                {term}
+              </span>
+              <div className="mx-1">
+                <div className="animate-spin-slow text-purple-400 text-xl">
+                  ✦
+                </div>
+              </div>
+            </div>
+          ))}
+        </Marquee>
+
+        {/* Add spin animation to your global CSS or inline */}
+        <style>{`
+    @keyframes spin-slow {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    .animate-spin-slow {
+      animation: spin-slow 3s linear infinite;
+    }
+  `}</style>
+      </div>
 
       {/* Menu */}
       <StaggeredMenu
@@ -727,24 +767,24 @@ const App = () => {
       />
 
       {/* Hero Section */}
-<section id="home" ref={homeRef} className={`relative z-10 min-h-screen flex items-center justify-center transition-all duration-300 pointer-events-none ${isMenuOpen ? 'lg:mr-80 xl:mr-96' : ''}`}>
-  <div className="text-center px-6 max-w-6xl mx-auto pointer-events-auto cursor-target">
-    <TextType
-      text={[
-        "Hello, World!",
-        "I mean hello there.",
-        "Do you need a FRONT END DEVELOPER?",
-        "I'm Allen :)",
-        "And I can help you!"
-      ]}
-      typingSpeed={100}
-      pauseDuration={1200}
-      showCursor={true}
-      cursorCharacter="█"
-      className="text-white text-4xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-8 drop-shadow-2xl"
-    />
-  </div>
-</section>
+      <section id="home" ref={homeRef} className={`relative z-10 min-h-screen flex items-center justify-center transition-all duration-300 pointer-events-none ${isMenuOpen ? 'lg:mr-80 xl:mr-96' : ''}`}>
+        <div className="text-center px-6 max-w-6xl mx-auto pointer-events-auto cursor-target">
+          <div className="text-center px-6 max-w-6xl mx-auto pointer-events-auto cursor-target">
+            <TextType
+              text={[
+                "Hello, World!",
+                "I mean hello there.",
+                "I'm Allen :)"
+              ]}
+              typingSpeed={60}
+              pauseDuration={1000}
+              showCursor={true}
+              cursorCharacter="█"
+              className="text-white text-4xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-8 drop-shadow-5xl"
+            />
+          </div>
+        </div>
+      </section>
 
       {/* Enhanced Gradient Transition with Blurred Edges */}
       <div className="relative h-32 z-20 overflow-hidden">
@@ -753,134 +793,326 @@ const App = () => {
       </div>
 
       {/* About Section */}
-      <section id="about" ref={aboutRef} className="relative min-h-screen py-20 px-6 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black">
-          <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-black/80 via-black/40 to-transparent backdrop-blur-3xl"></div>
-          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/80 via-black/40 to-transparent backdrop-blur-3xl"></div>
-        </div>
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-green-900/10 via-transparent to-blue-900/10 backdrop-blur-sm"></div>
+      <section id="about" ref={aboutRef} className="relative min-h-screen py-20 px-4 md:px-6 overflow-hidden">
+  <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black">
+    <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-black/80 via-black/40 to-transparent backdrop-blur-3xl"></div>
+    <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/80 via-black/40 to-transparent backdrop-blur-3xl"></div>
+  </div>
 
-        <div className="container mx-auto max-w-7xl relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            {/* Left Column - Profile & Image */}
-            <div className="lg:col-span-5 relative">
-              <div className="sticky top-32">
-                <div className="relative group">
-                  <div className="absolute -inset-4 bg-gradient-to-r from-green-500 to-blue-500 rounded-3xl opacity-30 group-hover:opacity-50 blur-xl transition-all duration-500"></div>
-                  <div className="relative bg-black/80 backdrop-blur-xl rounded-2xl p-8 border border-white/20 shadow-2xl cursor-target">
-                    <ProfileCard
-                      name="Allen James M. Martillan"
-                      title="Frontend Developer"
-                      handle="allenmartillan715"
-                      status="Online"
-                      contactText="Contact Me"
-                      avatarUrl={pfpImage}
-                      showUserInfo={true}
-                      enableTilt={true}
-                      enableMobileTilt={false}
-                      onContactClick={handleContactClick}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+  <div className="container mx-auto max-w-6xl relative z-10">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      {/* Left Column - Profile & Image + Dropdown Story - Hidden on mobile */}
+      <div className="lg:col-span-5 relative hidden lg:block">
+        <div className="sticky top-32">
+          <div className="relative group">
+            <div className="min-h-screen flex items-center justify-center p-4">
+              <div className="cursor-target relative bg-gray/80 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-2xl w-full">
+                <ProfileCard
+                  name="Allen James M. Martillan"
+                  title="Frontend Developer"
+                  handle="allenmartillan715"
+                  status="Online"
+                  contactText="Contact Me"
+                  avatarUrl={pfpImage}
+                  showUserInfo={true}
+                  enableTilt={true}
+                  enableMobileTilt={false}
+                  onContactClick={handleContactClick}
+                />
 
-            {/* Right Column - Content */}
-            <div className="lg:col-span-7 space-y-8">
-              <div className={`transform transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-12 h-1 bg-gradient-to-r from-green-400 to-blue-400 rounded-full"></div>
-                  <span className="text-green-400 uppercase tracking-widest text-sm font-bold">About</span>
-                </div>
-                <h2 className="text-6xl lg:text-8xl font-black bg-gradient-to-r from-white via-white to-white/90 bg-clip-text text-transparent leading-none drop-shadow-2xl">
-                  FRONTEND
-                  <br />
-                  <span className="bg-gradient-to-r from-green-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
-                    DEVELOPER
-                  </span>
-                </h2>
-              </div>
-
-              <div className="space-y-6">
-                <div className={`transform transition-all duration-700 delay-200 ${isVisible ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0'}`}>
-                  <p className="text-1.1xl text-white/90 leading-relaxed font-light drop-shadow-lg">
-                    I specialize in creating <span className="text-green-400 font-semibold">exceptional digital experiences</span> that blend cutting-edge technology with user-centered design. Every pixel is crafted with purpose and every interaction is designed to delight.
-                  </p>
-                </div>
-
-                {/* Enhanced Feature Cards */}
-                <div className={`grid grid-cols-2 lg:grid-cols-4 gap-4 transform transition-all duration-700 delay-400 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-                  <FeatureCard
-                    icon={<HiOutlineLightningBolt size={20} />}
-                    title="Performance"
-                    description="Lightning-fast applications optimized for modern web standards"
-                    color="green"
-                  />
-                  <FeatureCard
-                    icon={<MdOutlineDesignServices size={20} />}
-                    title="Design"
-                    description="Beautiful interfaces prioritizing UX, accessibility, and modern aesthetics"
-                    color="blue"
-                  />
-                  <FeatureCard
-                    icon={<HiOutlineSparkles size={20} />}
-                    title="Innovation"
-                    description="Cutting-edge solutions with latest technologies and best practices"
-                    color="purple"
-                  />
-                  <FeatureCard
-                    icon={<FiAward size={20} />}
-                    title="Quality"
-                    description="Robust, maintainable code with comprehensive testing"
-                    color="yellow"
-                  />
-                </div>
-
-                {/* Call to Action */}
-                <div className={`transform transition-all duration-700 delay-600 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-                  <div className="bg-gradient-to-r from-green-500/20 to-blue-500/20 backdrop-blur-lg rounded-2xl p-4 border border-white/20">
-                    <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
-                      <div>
-                        <h3 className="text-white font-bold text-xl mb-1">Ready to start your project?</h3>
-                        <p className="text-white/70">Let's create your next big idea.</p>
+                {/* Dropdown Story - Only on desktop */}
+                {isLearnMoreExpanded && (
+                  <div className="cursor-target mt-6 pt-6 border-t border-white/20 animate-fadeIn">
+                    <div className="space-y-4">
+                      <div className="text-center">
+                        <h4 className="text-white font-bold text-lg mb-1">My Journey</h4>
+                        <p className="text-white/70 text-xs">From curiosity to career</p>
                       </div>
-                      <div className="flex justify-end mt-2">
-                        <button
-                          onClick={handleResumeOpen}
-                          className="cursor-target bg-transparent text-white font-semibold py-1 px-6 rounded-lg border border-white/20 hover:border-white/40 transition-all duration-300"
-                        >
-                          <ShinyText
-                            text="CV"
-                            disabled={false}
-                            speed={3}
-                            className="text-white font-medium"
-                          />
-                        </button>
-                      </div>
-                      <div className="flex gap-3">
-                        <button
-                          onClick={handleStartProject}
-                          className="cursor-target bg-white text-black font-semibold py-1 px-6 rounded-lg hover:shadow-lg transition-all duration-300 transform hover:scale-105"
-                        >
-                          Start Project
-                        </button>
-                        <button
-                          onClick={handleLearnMore}
-                          className="cursor-target bg-transparent text-white font-semibold py-1 px-6 rounded-lg border border-white/20 hover:border-white/40 transition-all duration-300 flex items-center gap-2"
-                        >
-                          {isLearnMoreExpanded ? 'Show Less' : 'Learn More'}
-                          {isLearnMoreExpanded ? <FiChevronUp size={16} /> : <FiChevronDown size={16} />}
-                        </button>
+
+                      <div className="pt-3 border-t border-white/10">
+                        <h5 className="text-white font-bold text-xs mb-2">Timeline</h5>
+                        <div className="space-y-1">
+                          {[
+                            { year: '2018', event: 'First HTML' },
+                            { year: '2022', event: 'CSS' },
+                            { year: '2023', event: 'C++ & JavaScript' },
+                            { year: '2024', event: 'Python & Java' },
+                            { year: '2025', event: 'Typescipt, REACT, & Angular' }
+                          ].map((item, index) => (
+                            <div key={index} className="flex items-center gap-2 text-xs">
+                              <span className="text-green-400 font-mono">{item.year}</span>
+                              <div className="h-px flex-1 bg-white/10"></div>
+                              <span className="text-white/90">{item.event}</span>
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                )}
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
+      {/* Right Column - Content */}
+      <div className="lg:col-span-7 space-y-6 flex flex-col justify-center h-full">
+        <div className={`transform transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-1 bg-gradient-to-r from-green-400 to-blue-400 rounded-full"></div>
+            <span className="text-green-400 uppercase tracking-widest text-xs font-bold">About</span>
+          </div>
+          <h2 className="text-4xl sm:text-5xl lg:text-7xl font-black bg-gradient-to-r from-white via-white to-white/90 bg-clip-text text-transparent leading-tight drop-shadow-2xl mb-6">
+            FRONTEND
+            <br />
+            <span className="bg-gradient-to-r from-green-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+              DEVELOPER
+            </span>
+          </h2>
+          
+          {/* Profile Card under the heading for mobile - NOW CENTERED */}
+          <div className="block lg:hidden mb-8 flex justify-center">
+            <div className="cursor-target relative bg-gray/80 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-2xl max-w-md w-full">
+              <ProfileCard
+                name="Allen James M. Martillan"
+                title="Frontend Developer"
+                handle="allenmartillan715"
+                status="Online"
+                contactText="Contact Me"
+                avatarUrl={pfpImage}
+                showUserInfo={true}
+                enableTilt={true}
+                enableMobileTilt={false}
+                onContactClick={handleContactClick}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="space-y-5">
+          <div className={`transform transition-all duration-700 delay-200 ${isVisible ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0'}`}>
+            <p className="text-lg text-white/90 leading-relaxed font-light drop-shadow-lg">
+              I specialize in creating <span className="text-green-400 font-semibold">exceptional digital experiences</span> that blend cutting-edge technology with user-centered design. Every pixel is crafted with purpose and every interaction is designed to delight.
+            </p>
+          </div>
+
+          {/* Enhanced Feature Cards - NOW 2x2 grid on mobile */}
+          <div className={`grid grid-cols-2 lg:grid-cols-4 gap-3 transform transition-all duration-700 delay-400 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+            {/* Performance Card */}
+            <div className="cursor-target bg-gray-900 rounded-xl border border-gray-700 p-3 transition-all duration-300 hover:border-green-500 hover:shadow-lg hover:shadow-green-500/20">
+              <div className="flex items-start gap-2">
+                <div className="p-1.5 rounded-lg bg-green-900">
+                  <HiOutlineLightningBolt size={18} className="text-green-400" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-white text-sm mb-1">Performance</h3>
+                  <p className="text-gray-300 text-xs">Lightning-fast applications optimized for modern web standards</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Design Card */}
+            <div className="cursor-target bg-gray-900 rounded-xl border border-gray-700 p-3 transition-all duration-300 hover:border-blue-500 hover:shadow-lg hover:shadow-blue-500/20">
+              <div className="flex items-start gap-2">
+                <div className="p-1.5 rounded-lg bg-blue-900">
+                  <MdOutlineDesignServices size={18} className="text-blue-400" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-white text-sm mb-1">Design</h3>
+                  <p className="text-gray-300 text-xs">Beautiful interfaces prioritizing UX, accessibility, and modern aesthetics</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Innovation Card */}
+            <div className="cursor-target bg-gray-900 rounded-xl border border-gray-700 p-3 transition-all duration-300 hover:border-purple-500 hover:shadow-lg hover:shadow-purple-500/20">
+              <div className="flex items-start gap-2">
+                <div className="p-1.5 rounded-lg bg-purple-900">
+                  <HiOutlineSparkles size={18} className="text-purple-400" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-white text-sm mb-1">Innovation</h3>
+                  <p className="text-gray-300 text-xs">Cutting-edge solutions with latest technologies and best practices</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Quality Card */}
+            <div className="cursor-target bg-gray-900 rounded-xl border border-gray-700 p-3 transition-all duration-300 hover:border-yellow-500 hover:shadow-lg hover:shadow-yellow-500/20">
+              <div className="flex items-start gap-2">
+                <div className="p-1.5 rounded-lg bg-yellow-900">
+                  <FiAward size={18} className="text-yellow-400" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-white text-sm mb-1">Quality</h3>
+                  <p className="text-gray-300 text-xs">Robust, maintainable code with comprehensive testing</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Call to Action - Fixed Structure */}
+          <div className={`cursor-target transform transition-all duration-700 delay-600 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+            <div className="bg-gradient-to-r from-green-500/20 to-blue-500/20 backdrop-blur-lg rounded-xl p-4 border border-white/20">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                {/* Buttons on the LEFT */}
+                <div className="flex flex-wrap items-center gap-2 sm:gap-3 order-2 sm:order-1">
+                  <button
+                    onClick={handleResumeOpen}
+                    className="relative bg-transparent text-white font-semibold py-2 px-3 sm:py-1.5 sm:px-4 rounded-lg border border-white/20 hover:border-white/40 transition-all duration-300 text-xs sm:text-sm hover:bg-white/5"
+                  >
+                    <ShinyText
+                      text="CV"
+                      disabled={false}
+                      speed={3}
+                      className="text-white font-medium"
+                    />
+                  </button>
+
+                  <button
+                    onClick={handleStartProject}
+                    className="relative bg-white text-black font-semibold py-2 px-3 sm:py-1.5 sm:px-4 rounded-lg hover:shadow-lg transition-all duration-300 hover:scale-105 text-xs sm:text-sm"
+                  >
+                    Start Project
+                  </button>
+
+                  <button
+                    onClick={handleLearnMore}
+                    className="relative bg-transparent text-white font-semibold py-2 px-3 sm:py-1.5 sm:px-4 rounded-lg border border-white/20 hover:border-white/40 transition-all duration-300 flex items-center gap-1 text-xs sm:text-sm hover:bg-white/5"
+                  >
+                    {isLearnMoreExpanded ? 'Less' : 'More'}
+                    {isLearnMoreExpanded ? <FiChevronUp size={14} /> : <FiChevronDown size={14} />}
+                  </button>
+                </div>
+
+                {/* Text content on the RIGHT */}
+                <div className="text-center sm:text-right order-1 sm:order-2 mb-3 sm:mb-0">
+                  <h3 className="text-white font-bold text-sm mb-1">Let's create your next big idea.</h3>
+                  <p className="text-white/70 text-xs">Start our project.</p>
+                </div>
+              </div>
+
+              {/* Additional Dropdown - Responsive for mobile */}
+              {isLearnMoreExpanded && (
+                <div className="mt-4 sm:mt-6 pt-2 border-t border-white/20 animate-fadeIn">
+                  <div className="space-y-4">
+                    {/* Timeline Dropdown for mobile (moved from left column) */}
+                    <div className="block lg:hidden cursor-target">
+                      <div className="space-y-4">
+                        <div className="text-center">
+                          <h4 className="text-white font-bold text-base sm:text-lg mb-1">My Journey</h4>
+                          <p className="text-white/70 text-xs">From curiosity to career</p>
+                        </div>
+
+                        <div className="pt-3 border-t border-white/10">
+                          <h5 className="text-white font-bold text-xs mb-2">Timeline</h5>
+                          <div className="space-y-2">
+                            {[
+                              { year: '2018', event: 'First HTML' },
+                              { year: '2022', event: 'CSS' },
+                              { year: '2023', event: 'C++ & JavaScript' },
+                              { year: '2024', event: 'Python & Java' },
+                              { year: '2025', event: 'Typescipt, REACT, & Angular' }
+                            ].map((item, index) => (
+                              <div key={index} className="flex items-center gap-2 text-xs">
+                                <span className="text-green-400 font-mono min-w-[50px]">{item.year}</span>
+                                <div className="h-px flex-1 bg-white/10"></div>
+                                <span className="text-white/90 text-right sm:text-left">{item.event}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Simple Extended Content */}
+                    <div className="cursor-target bg-black/40 backdrop-blur-sm rounded-xl p-3 sm:p-2 border border-white/10">
+                      <h4 className="text-white font-bold text-sm mb-2">Current Focus</h4>
+                      <p className="text-white/80 text-xs mb-3">
+                        Building fast, accessible apps. Learning Next.js and performance optimization.
+                      </p>
+                      <div className="cursor-target flex flex-wrap gap-1">
+                        {['React', 'TypeScript', 'Next.js', 'Tailwind'].map((tech) => (
+                          <span
+                            key={tech}
+                            className="px-2 py-1 rounded text-xs border border-white/20 bg-white/5 text-white/80"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Recent Endeavors - Responsive containers */}
+                    <div>
+                      <h4 className="cursor-target text-white font-bold text-sm mb-2">Recent Endeavors</h4>
+                      <div className="flex flex-col sm:flex-row gap-2">
+                        {/* Hackathon 1 */}
+                        <div className="cursor-target flex-1 bg-gradient-to-r from-green-400/10 to-blue-400/10 backdrop-blur-sm rounded-lg p-3 border border-white/10 hover:border-green-400/30 transition-all duration-300">
+                          <div className="flex flex-col h-full">
+                            <div className="flex items-center gap-2 mb-1">
+                              <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse flex-shrink-0"></div>
+                              <div className="text-white font-medium text-xs truncate">HACK THE FUTURE</div>
+                            </div>
+                            <div className="text-white/60 text-xs truncate">Smart Batangas Hackathon</div>
+                            <div className="text-white/50 text-xs mt-1">Participant • 2024</div>
+                          </div>
+                        </div>
+
+                        {/* Hackathon 2 */}
+                        <div className="cursor-target flex-1 bg-gradient-to-r from-blue-400/10 to-purple-400/10 backdrop-blur-sm rounded-lg p-3 border border-white/10 hover:border-blue-400/30 transition-all duration-300">
+                          <div className="flex flex-col h-full">
+                            <div className="flex items-center gap-2 mb-1">
+                              <div className="w-2 h-2 rounded-full bg-blue-400 animate-pulse flex-shrink-0"></div>
+                              <div className="text-white font-medium text-xs truncate">Byte Forward</div>
+                            </div>
+                            <div className="text-white/60 text-xs truncate">South Luzon Leg</div>
+                            <div className="text-white/50 text-xs mt-1">Participant • 2024</div>
+                          </div>
+                        </div>
+
+                        {/* University */}
+                        <div className="cursor-target flex-1 bg-gradient-to-r from-purple-400/10 to-pink-400/10 backdrop-blur-sm rounded-lg p-3 border border-white/10 hover:border-purple-400/30 transition-all duration-300">
+                          <div className="flex flex-col h-full">
+                            <div className="flex items-center gap-2 mb-1">
+                              <div className="w-2 h-2 rounded-full bg-purple-400 animate-pulse flex-shrink-0"></div>
+                              <div className="text-white font-medium text-xs truncate">BATSTATE-U</div>
+                            </div>
+                            <div className="text-white/60 text-xs truncate">Business Analytics</div>
+                            <div className="text-white/50 text-xs mt-1">3rd Year • Present</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+      {/* Add this CSS for animations */}
+      <style>{`
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fadeIn {
+    animation: fadeIn 0.3s ease-out forwards;
+  }
+`}</style>
       {/* Tech Stack Section */}
       <section id="tech-stack" ref={techStackRef} className="relative min-h-screen py-20 px-6 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black">
@@ -1063,86 +1295,86 @@ const App = () => {
       </section>
 
       {/* Projects Section */}
-<section id="projects" ref={projectsRef} className="relative min-h-screen py-20 px-6 overflow-hidden z-10">
-  {/* Background layers */}
-  <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black">
-    <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-black/80 via-black/40 to-transparent backdrop-blur-3xl"></div>
-    <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/80 via-black/40 to-transparent backdrop-blur-3xl"></div>
-  </div>
-
-  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-purple-900/10 via-transparent to-blue-900/10 backdrop-blur-sm"></div>
-
-  <div className="container mx-auto max-w-7xl relative z-10">
-    {/* Header */}
-    <div className="text-center mb-12">
-      <div className={`transform transition-all duration-1000 ${isProjectsVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-100'}`}>
-        <div className="flex items-center justify-center gap-4 mb-6">
-          <div className="w-12 h-1 bg-gradient-to-r from-green-400 to-blue-400 rounded-full"></div>
-          <span className="text-green-400 uppercase tracking-widest text-sm font-bold">Portfolio</span>
-          <div className="w-12 h-1 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full"></div>
+      <section id="projects" ref={projectsRef} className="relative min-h-screen py-20 px-6 overflow-hidden z-10">
+        {/* Background layers */}
+        <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black">
+          <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-black/80 via-black/40 to-transparent backdrop-blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/80 via-black/40 to-transparent backdrop-blur-3xl"></div>
         </div>
-        <h2 className="text-6xl lg:text-8xl font-black bg-gradient-to-r from-white via-white to-white/90 bg-clip-text text-transparent leading-none mb-6 drop-shadow-2xl">
-          FEATURED
-          <br />
-          <span className="bg-gradient-to-r from-green-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
-            PROJECTS
-          </span>
-        </h2>
-      </div>
-      <p className="text-xl text-white/70 max-w-2xl mx-auto font-light drop-shadow-lg">
-        Explore my projects - click the numbers to navigate
-      </p>
-    </div>
 
-    {/* Project Gallery with LetterGlitch Background */}
-    <div className={`transform transition-all duration-1000 delay-300 ${isProjectsVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}>
-      <div className="w-full bg-transparent rounded-2xl border border-white/20 backdrop-blur-lg p-3 cursor-target relative overflow-hidden">
-        {/* LetterGlitch background inside the container */}
-        <div className="absolute inset-0 rounded-2xl overflow-hidden z-0">
-          <LetterGlitch
-            glitchColors={['#2b4539', '#61dca3', '#61b3dc']}
-            glitchSpeed={30}
-            centerVignette={true}
-            outerVignette={false}
-            smooth={true}
-            characters="PROJECTSCODEDESIGNDEVELOPBUILDCREATEINNOVATE0123456789"
-            className="opacity-40 rounded-2xl"
-          />
-        </div>
-        
-        {/* Circular Gallery on top */}
-        <div className="w-full h-[600px] relative flex items-center justify-center bg-transparent z-10">
-          <CircularGallery 
-            items={circularGalleryData} 
-            projectsData={projects} 
-            className="bg-transparent"
-            radius={450}
-          />
-        </div>
-      </div>
-    </div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-purple-900/10 via-transparent to-blue-900/10 backdrop-blur-sm"></div>
 
-    {/* Project Stats */}
-    <div className={`mt-16 grid grid-cols-2 lg:grid-cols-4 gap-6 transform transition-all duration-1000 delay-700 ${isProjectsVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-      {[
-        { number: "10+", label: "Projects Completed" },
-        { number: "3", label: "Years Experience" },
-        { number: "98%", label: "Client Satisfaction" },
-        { number: "35K+", label: "Lines of Code" }
-      ].map((stat) => (
-        <div
-          key={stat.label}
-          className="bg-black/60 backdrop-blur-xl rounded-2xl p-6 border border-white/20 hover:border-green-400/50 transition-all duration-500 group text-center cursor-target"
-        >
-          <div className="text-4xl font-bold text-white mb-2 bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent">
-            {stat.number}
+        <div className="container mx-auto max-w-7xl relative z-10">
+          {/* Header */}
+          <div className="text-center mb-12">
+            <div className={`transform transition-all duration-1000 ${isProjectsVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-100'}`}>
+              <div className="flex items-center justify-center gap-4 mb-6">
+                <div className="w-12 h-1 bg-gradient-to-r from-green-400 to-blue-400 rounded-full"></div>
+                <span className="text-green-400 uppercase tracking-widest text-sm font-bold">Portfolio</span>
+                <div className="w-12 h-1 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full"></div>
+              </div>
+              <h2 className="text-6xl lg:text-8xl font-black bg-gradient-to-r from-white via-white to-white/90 bg-clip-text text-transparent leading-none mb-6 drop-shadow-2xl">
+                FEATURED
+                <br />
+                <span className="bg-gradient-to-r from-green-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+                  PROJECTS
+                </span>
+              </h2>
+            </div>
+            <p className="text-xl text-white/70 max-w-2xl mx-auto font-light drop-shadow-lg">
+              Explore my projects - click the numbers to navigate
+            </p>
           </div>
-          <div className="text-white/70 text-sm font-medium">{stat.label}</div>
+
+          {/* Project Gallery with LetterGlitch Background */}
+          <div className={`transform transition-all duration-1000 delay-300 ${isProjectsVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}>
+            <div className="w-full bg-transparent rounded-2xl border border-white/20 backdrop-blur-lg p-3 cursor-target relative overflow-hidden">
+              {/* LetterGlitch background inside the container */}
+              <div className="absolute inset-0 rounded-2xl overflow-hidden z-0">
+                <LetterGlitch
+                  glitchColors={['#2b4539', '#61dca3', '#61b3dc']}
+                  glitchSpeed={30}
+                  centerVignette={true}
+                  outerVignette={false}
+                  smooth={true}
+                  characters="PROJECTSCODEDESIGNDEVELOPBUILDCREATEINNOVATE0123456789"
+                  className="opacity-40 rounded-2xl"
+                />
+              </div>
+
+              {/* Circular Gallery on top */}
+              <div className="w-full h-[600px] relative flex items-center justify-center bg-transparent z-10">
+                <CircularGallery
+                  items={circularGalleryData}
+                  projectsData={projects}
+                  className="bg-transparent"
+                  radius={450}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Project Stats */}
+          <div className={`mt-16 grid grid-cols-2 lg:grid-cols-4 gap-6 transform transition-all duration-1000 delay-700 ${isProjectsVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+            {[
+              { number: "10+", label: "Projects Completed" },
+              { number: "3", label: "Years Experience" },
+              { number: "98%", label: "Client Satisfaction" },
+              { number: "35K+", label: "Lines of Code" }
+            ].map((stat) => (
+              <div
+                key={stat.label}
+                className="bg-black/60 backdrop-blur-xl rounded-2xl p-6 border border-white/20 hover:border-green-400/50 transition-all duration-500 group text-center cursor-target"
+              >
+                <div className="text-4xl font-bold text-white mb-2 bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent">
+                  {stat.number}
+                </div>
+                <div className="text-white/70 text-sm font-medium">{stat.label}</div>
+              </div>
+            ))}
+          </div>
         </div>
-      ))}
-    </div>
-  </div>
-</section>
+      </section>
 
       {/* Testimonials Section */}
       <section id="testimonials" ref={testimonialsRef} className="relative min-h-screen py-20 px-6 overflow-hidden">

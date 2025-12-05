@@ -1,0 +1,64 @@
+import * as React from "react"
+import { motion } from "framer-motion"
+import { cn } from "@/lib/utils"
+import { useTheme } from "next-themes"
+
+const fontSizeClasses = {
+  sm: "text-5xl sm:text-6xl md:text-7xl",
+  md: "text-6xl sm:text-7xl md:text-8xl",
+  lg: "text-7xl sm:text-8xl md:text-9xl",
+  xl: "text-8xl sm:text-9xl md:text-[10rem]",
+  "2xl": "text-9xl sm:text-[10rem] md:text-[11rem]",
+  "3xl": "text-[10rem] sm:text-[11rem] md:text-[12rem]",
+}
+
+export const Marquee = React.forwardRef(({
+  className,
+  text,
+  repeat = 4,
+  duration = 20,
+  fontSize = "sm",
+  strokeWidth = "1px",
+  ...props
+}, ref) => {
+  const { theme } = useTheme()
+  const isDark = theme === "dark"
+
+  return (
+    <div
+      ref={ref}
+      className={cn("relative w-screen overflow-hidden py-0", className)}
+      {...props}>
+      <>
+        <div
+          className="absolute left-0 top-0 bottom-0 w-[20%] bg-gradient-to-r from-background to-transparent z-10" />
+        <div
+          className="absolute right-0 top-0 bottom-0 w-[20%] bg-gradient-to-l from-background to-transparent z-10" />
+      </>
+      <motion.div
+        className="flex whitespace-nowrap"
+        animate={{ 
+          x: ["0%", "-50%"]
+        }}
+        transition={{ 
+          repeat: Number.POSITIVE_INFINITY, 
+          ease: "linear", 
+          duration,
+        }}>
+        {[...Array(repeat)].map((_, index) => (
+          <div key={index} className="flex items-center mx-4">
+            <span
+              className={cn(fontSizeClasses[fontSize], "font-bold text-transparent px-4")}
+              style={{
+                WebkitTextStroke: `${strokeWidth} ${isDark ? 'rgb(64 64 64)' : 'rgb(156 163 175)'}`,
+              }}>
+              {text}
+            </span>
+          </div>
+        ))}
+      </motion.div>
+    </div>
+  );
+})
+
+Marquee.displayName = "Marquee"

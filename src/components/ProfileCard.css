@@ -92,7 +92,7 @@
       hsla(120, 60%, 60%, calc(var(--card-opacity) * 0.5)) 50%,
       hsla(120, 0%, 50%, 0) 100%
     ),
-    radial-gradient(35% 52% at 55% 20%, #4affaa 0%, #073aff00 100%),
+    /* Removed: radial-gradient(35% 52% at 55% 20%, #4affaa 0%, #073aff00 100%), */
     radial-gradient(100% 100% at 50% 50%, #4affaa 1%, #073aff00 76%),
     conic-gradient(from 124deg at 50% 50%, 
       hsl(120, 100%, 60%) 0%,
